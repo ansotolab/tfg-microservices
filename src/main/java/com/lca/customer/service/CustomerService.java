@@ -44,7 +44,15 @@ public class CustomerService {
         Optional<Customer> customerSearch = customerRepository.findById(customer.getId());
         if (customerSearch.isPresent())
         {
-            return customerRepository.save(customer);
+            Optional<Customer> customerSearchCIF = customerRepository.findByCifAndByIdNot(customer.getCif(), customer.getId());
+            if (!customerSearchCIF.isPresent())
+            {
+                return customerRepository.save(customer);
+            }
+            else
+            {
+                throw new CustomerAlreadyExists("The customer with CIF: " + customer.getCif() + " already exists.");
+            }
         }
         else
         {
