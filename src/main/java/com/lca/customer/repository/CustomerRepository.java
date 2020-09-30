@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
     public Optional<Customer> findById(long id);
     public Optional<Customer> findByCif(String cif);
-    public Optional<Customer> findByCifAndByIdNot(String cif, long id);
+    public Optional<Customer> findByCifAndIdNot(String cif, long id);
 }

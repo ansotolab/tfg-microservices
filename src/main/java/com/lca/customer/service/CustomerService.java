@@ -44,7 +44,7 @@ public class CustomerService {
         Optional<Customer> customerSearch = customerRepository.findById(customer.getId());
         if (customerSearch.isPresent())
         {
-            Optional<Customer> customerSearchCIF = customerRepository.findByCifAndByIdNot(customer.getCif(), customer.getId());
+            Optional<Customer> customerSearchCIF = customerRepository.findByCifAndIdNot(customer.getCif(), customer.getId());
             if (!customerSearchCIF.isPresent())
             {
                 return customerRepository.save(customer);
@@ -60,17 +60,17 @@ public class CustomerService {
         }
     }
 
-    public Map<String, Object> deleteCustomer(Customer customer) {
-        Optional<Customer> customerSearch = customerRepository.findById(customer.getId());
-        if (customerSearch.isPresent())
+    public Map<String, Object> deleteCustomer(long id) {
+        Optional<Customer> customer = customerRepository.findById(id);
+        if (customer.isPresent())
         {
-            customerRepository.delete(customer);
+            customerRepository.delete(customer.get());
 
-            customerSearch = customerRepository.findById(customer.getId());
-            if (!customerSearch.isPresent())
+            customer = customerRepository.findById(id);
+            if (!customer.isPresent())
             {
                 Map<String, Object> result = new HashMap<String, Object>();
-                result.put("result", "The customer with id: " + customer.getId() + " has been deleted.");
+                result.put("result", "The customer with id: " + id + " has been deleted.");
                 return result;
             }
             else
@@ -80,7 +80,7 @@ public class CustomerService {
         }
         else
         {
-            throw new CustomerNotFound("The customer with id: " + customer.getId() + " does not exist.");
+            throw new CustomerNotFound("The customer with id: " + id + " does not exist.");
         }
     }
 }

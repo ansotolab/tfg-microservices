@@ -68,7 +68,7 @@ public class CustomerServiceTest {
         Customer customer = new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
 
         given(customerRepository.findById(customer.getId())).willReturn(Optional.of(customer));
-        given(customerRepository.findByCifAndByIdNot(customer.getCif(), customer.getId())).willReturn(Optional.empty());
+        given(customerRepository.findByCifAndIdNot(customer.getCif(), customer.getId())).willReturn(Optional.empty());
         given(customerRepository.save(customer)).willAnswer(invocation -> invocation.getArgument(0));
 
         Customer savedCustomer = customerService.updateCustomer(customer);
@@ -89,7 +89,7 @@ public class CustomerServiceTest {
         });
 
         verify(customerRepository, never()).save(any(Customer.class));
-        verify(customerRepository, never()).findByCifAndByIdNot(anyString(), anyLong());
+        verify(customerRepository, never()).findByCifAndIdNot(anyString(), anyLong());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class CustomerServiceTest {
         Customer customer = new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
 
         given(customerRepository.findById(customer.getId())).willReturn(Optional.of(customer));
-        given(customerRepository.findByCifAndByIdNot(customer.getCif(), customer.getId())).willReturn(Optional.of(customer));
+        given(customerRepository.findByCifAndIdNot(customer.getCif(), customer.getId())).willReturn(Optional.of(customer));
 
         assertThrows(CustomerAlreadyExists.class, () -> {
             customerService.updateCustomer(customer);
@@ -113,11 +113,11 @@ public class CustomerServiceTest {
     public void shouldDeleteCustomerSuccessfully() {
         Customer customer = new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
 
-        given(customerRepository.findById(customer.getId()))
+        given(customerRepository.findById(1L))
                 .willReturn(Optional.of(customer))
                 .willReturn(Optional.empty());
 
-        Map<String, Object> expextedResponse = customerService.deleteCustomer(customer);
+        Map<String, Object> expextedResponse = customerService.deleteCustomer(customer.getId());
         Map<String, Object> realResponse = new HashMap<String, Object>();
         realResponse.put("result", "The customer with id: " + customer.getId() + " has been deleted.");
 
@@ -128,10 +128,10 @@ public class CustomerServiceTest {
     public void shouldThrowErrorWhenDeleteCustomerWithNotExistingID() {
         Customer customer = new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
 
-        given(customerRepository.findById(customer.getId())).willReturn(Optional.empty());
+        given(customerRepository.findById(1L)).willReturn(Optional.empty());
 
         assertThrows(CustomerNotFound.class, () -> {
-            customerService.deleteCustomer(customer);
+            customerService.deleteCustomer(customer.getId());
         });
 
         verify(customerRepository, never()).delete(any(Customer.class));
@@ -141,12 +141,12 @@ public class CustomerServiceTest {
     public void shouldThrowErrorWhenNotDeleteCustomer() {
         Customer customer = new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
 
-        given(customerRepository.findById(customer.getId()))
+        given(customerRepository.findById(1L))
                 .willReturn(Optional.of(customer))
                 .willReturn(Optional.of(customer));
 
         assertThrows(CustomerHasNotBeenDeleted.class, () -> {
-            customerService.deleteCustomer(customer);
+            customerService.deleteCustomer(customer.getId());
         });
     }
 
