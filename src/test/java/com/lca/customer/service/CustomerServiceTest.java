@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
 public class CustomerServiceTest {
 
     @Mock
