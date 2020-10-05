@@ -15,7 +15,11 @@ jobs:
 
     steps:
       - name: 'Download Gateway'
-        run: cd ${{ env.HOME }} && git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
+        run: |
+          cd ${{ env.HOME }}
+          git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
+          pwd
+          ls
       - name: 'Run Gateway'
         run: cd ${{ env.HOME }}/lca-gateway && mvn spring-boot:run
       - name: 'Download Registry'
