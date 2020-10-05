@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - name: Run tests
         run: |
           cd ${{ env.HOME }}
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
