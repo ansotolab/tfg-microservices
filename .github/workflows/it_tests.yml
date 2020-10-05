@@ -14,23 +14,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Downloading Gateway'
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT }}
-          repository: ansotolab/lca-gateway
-          path: ${{ env.HOME }}
+      - name: 'Download Gateway'
+        run: cd ${{ env.HOME }} && git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
       - name: 'Run Gateway'
         run: cd ${{ env.HOME }}/lca-gateway && mvn spring-boot:run
-      - name: 'Downloading Registry'
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT }}
-          repository: ansotolab/lca-registry
-          path: ${{ env.HOME }}
+      - name: 'Download Registry'
+        run: cd ${{ env.HOME }} && git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-registry.git
       - name: 'Run Registry'
         run: cd ${{ env.HOME }}/lca-registry && mvn spring-boot:run
-      - name: 'Change to lca-folder folder'
+      - name: 'Change to lca-customer folder'
         run: cd ${{ env.GITHUB_WORKSPACE }}
       - name: 'IT Postman Tests'
         uses: matt-ball/newman-action@master
