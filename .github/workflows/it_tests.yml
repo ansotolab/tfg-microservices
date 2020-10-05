@@ -23,10 +23,12 @@ jobs:
         run: |
           cd ${{ env.HOME }}
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
+          ls
           cd ${{ env.HOME }}/lca-gateway
           mvn spring-boot:run
           cd ${{ env.HOME }}
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-registry.git
+          ls
           cd ${{ env.HOME }}/lca-registry
           mvn spring-boot:run
           cd ${{ env.GITHUB_WORKSPACE }}
