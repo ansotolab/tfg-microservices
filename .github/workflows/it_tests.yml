@@ -21,15 +21,15 @@ jobs:
           node-version: '12.x'
       - name: Run tests
         run: |
-          cd ${{ env.HOME }}
+          cd ${{ env.GITHUB_WORKSPACE }}
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
           ls
-          cd ${{ env.HOME }}/lca-gateway
+          cd ${{ env.GITHUB_WORKSPACE }}/lca-gateway
           mvn spring-boot:run
-          cd ${{ env.HOME }}
+          cd ${{ env.GITHUB_WORKSPACE }}
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-registry.git
           ls
-          cd ${{ env.HOME }}/lca-registry
+          cd ${{ env.GITHUB_WORKSPACE }}/lca-registry
           mvn spring-boot:run
           cd ${{ env.GITHUB_WORKSPACE }}
           npm install -g newman
