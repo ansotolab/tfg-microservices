@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - name: 'Downloading Gateway'
         uses: actions/checkout@v2
         with:
@@ -29,8 +28,8 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: ansotolab/lca-registry
           path: ../lca-registry
-          - name: 'Run Registry'
-            run: cd ../lca-registry && mvn spring-boot:run
+      - name: 'Run Registry'
+        run: cd ../lca-registry && mvn spring-boot:run
       - name: 'Change to lca-folder folder'
           run: cd ../lca-customer
       - name: 'IT Postman Tests'
