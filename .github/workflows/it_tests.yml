@@ -27,11 +27,11 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           repository: ansotolab/lca-registry
-          path: ${{ GITHUB_WORKSPACE }}/lca-registry
+          path: ${{ env.GITHUB_WORKSPACE }}/lca-registry
       - name: 'Run Registry'
-        run: cd ${{ GITHUB_WORKSPACE }}/lca-registry && mvn spring-boot:run
+        run: cd ${{ env.GITHUB_WORKSPACE }}/lca-registry && mvn spring-boot:run
       - name: 'Change to lca-folder folder'
-        run: cd ${{ GITHUB_WORKSPACE }}/lca-customer
+        run: cd ${{ env.GITHUB_WORKSPACE }}/lca-customer
       - name: 'IT Postman Tests'
         uses: matt-ball/newman-action@master
         with:
