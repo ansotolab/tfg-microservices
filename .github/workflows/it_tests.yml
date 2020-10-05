@@ -19,9 +19,9 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           repository: ansotolab/lca-gateway
-          path: ${{ GITHUB_WORKSPACE }}/lca-gateway
+          path: ${{ env.GITHUB_WORKSPACE }}/lca-gateway
       - name: 'Run Gateway'
-        run: cd ${{ GITHUB_WORKSPACE }}/lca-gateway && mvn spring-boot:run
+        run: cd ${{ env.GITHUB_WORKSPACE }}/lca-gateway && mvn spring-boot:run
       - name: 'Downloading Registry'
         uses: actions/checkout@v2
         with:
