@@ -31,7 +31,7 @@ jobs:
       - name: 'Run Registry'
         run: cd ../lca-registry && mvn spring-boot:run
       - name: 'Change to lca-folder folder'
-          run: cd ../lca-customer
+        run: cd ../lca-customer
       - name: 'IT Postman Tests'
         uses: matt-ball/newman-action@master
         with:
