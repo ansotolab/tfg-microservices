@@ -19,19 +19,19 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           repository: ansotolab/lca-gateway
-          path: lca-gateway
+          path: ${{ GITHUB_WORKSPACE }}/lca-gateway
       - name: 'Run Gateway'
-        run: cd ../lca-gateway && mvn spring-boot:run
+        run: cd ${{ GITHUB_WORKSPACE }}/lca-gateway && mvn spring-boot:run
       - name: 'Downloading Registry'
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.PAT }}
           repository: ansotolab/lca-registry
-          path: lca-registry
+          path: ${{ GITHUB_WORKSPACE }}/lca-registry
       - name: 'Run Registry'
-        run: cd ../lca-registry && mvn spring-boot:run
+        run: cd ${{ GITHUB_WORKSPACE }}/lca-registry && mvn spring-boot:run
       - name: 'Change to lca-folder folder'
-        run: cd ../lca-customer
+        run: cd ${{ GITHUB_WORKSPACE }}/lca-customer
       - name: 'IT Postman Tests'
         uses: matt-ball/newman-action@master
         with:
