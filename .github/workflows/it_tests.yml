@@ -19,7 +19,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           repository: ansotolab/lca-gateway
-          path: ../lca-gateway
+          path: lca-gateway
       - name: 'Run Gateway'
         run: cd ../lca-gateway && mvn spring-boot:run
       - name: 'Downloading Registry'
@@ -27,7 +27,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           repository: ansotolab/lca-registry
-          path: ../lca-registry
+          path: lca-registry
       - name: 'Run Registry'
         run: cd ../lca-registry && mvn spring-boot:run
       - name: 'Change to lca-folder folder'
