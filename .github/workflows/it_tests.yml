@@ -23,14 +23,12 @@ jobs:
         run: |
           cd ~/
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
-          ls
           cd ~/lca-gateway
-          mvn spring-boot:run
+          mvn spring-boot:run &
           cd ~/
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-registry.git
-          ls
           cd ~/lca-registry
-          mvn spring-boot:run
+          mvn spring-boot:run &
           cd ${{ env.GITHUB_WORKSPACE }}
           npm install -g newman
           newman run postman-customer.json
