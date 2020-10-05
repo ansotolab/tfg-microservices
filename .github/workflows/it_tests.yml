@@ -14,21 +14,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Download Gateway'
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
         run: |
           cd ${{ env.HOME }}
           git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-gateway.git
-          pwd
-          ls
-      - name: 'Run Gateway'
-        run: cd ${{ env.HOME }}/lca-gateway && mvn spring-boot:run
-      - name: 'Download Registry'
-        run: cd ${{ env.HOME }} && git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-registry.git
-      - name: 'Run Registry'
-        run: cd ${{ env.HOME }}/lca-registry && mvn spring-boot:run
-      - name: 'Change to lca-customer folder'
-        run: cd ${{ env.GITHUB_WORKSPACE }}
-      - name: 'IT Postman Tests'
-        uses: matt-ball/newman-action@master
-        with:
-          collection: postman-customer.json
+          cd ${{ env.HOME }}/lca-gateway
+          mvn spring-boot:run
+          cd ${{ env.HOME }}
+          git clone https://ansotolab:${{ secrets.PAT }}@github.com/ansotolab/lca-registry.git
+          cd ${{ env.HOME }}/lca-registry
+          mvn spring-boot:run
+          cd ${{ env.GITHUB_WORKSPACE }}
+          npm install -g newman
+          newman run postman-customer.json
