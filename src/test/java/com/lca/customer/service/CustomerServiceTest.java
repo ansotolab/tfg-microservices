@@ -4,6 +4,7 @@ import com.lca.customer.exception.CustomerAlreadyExists;
 import com.lca.customer.exception.CustomerHasNotBeenDeleted;
 import com.lca.customer.exception.CustomerNotFound;
 import com.lca.customer.model.Customer;
+import com.lca.customer.model.ProductDetail;
 import com.lca.customer.repository.CustomerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,9 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 //@SpringBootTest
@@ -29,6 +29,9 @@ public class CustomerServiceTest {
 
     @Mock
     private CustomerRepository customerRepository;
+
+    @Mock
+    private ProductDetailService productDetailService;
 
     @InjectMocks
     private CustomerService customerService;
@@ -39,15 +42,17 @@ public class CustomerServiceTest {
     @Test
     public void shouldSaveCustomerSuccessfully() {
         Customer customer = new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        ProductDetail productDetail = new ProductDetail("<h1>Texto de prueba</h1>", customer);
 
         given(customerRepository.findByCif(customer.getCif())).willReturn(Optional.empty());
         given(customerRepository.save(customer)).willAnswer(invocation -> invocation.getArgument(0));
+        given(productDetailService.saveProductDetail(productDetail)).willAnswer(invocation -> invocation.getArgument(0));
 
         Customer savedCustomer = customerService.saveCustomer(customer);
 
         assertThat(savedCustomer).isNotNull();
 
-        verify(customerRepository).save(any(Customer.class));
+        verify(customerRepository, times(2)).save(any(Customer.class));
     }
 
     @Test

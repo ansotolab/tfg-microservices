@@ -5,6 +5,7 @@ import com.lca.customer.exception.CustomerAlreadyExists;
 import com.lca.customer.exception.CustomerHasNotBeenDeleted;
 import com.lca.customer.exception.CustomerNotFound;
 import com.lca.customer.model.Customer;
+import com.lca.customer.model.ProductDetail;
 import com.lca.customer.service.CustomerService;
 import org.junit.Before;
 import org.junit.Test;

@@ -4,6 +4,7 @@ import com.lca.customer.exception.CustomerAlreadyExists;
 import com.lca.customer.exception.CustomerHasNotBeenDeleted;
 import com.lca.customer.exception.CustomerNotFound;
 import com.lca.customer.model.Customer;
+import com.lca.customer.model.ProductDetail;
 import com.lca.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ProductDetailService productDetailService;
 
     public Customer getCustomer(long id) {
         return customerRepository
@@ -32,7 +36,11 @@ public class CustomerService {
         Optional<Customer> customerSearch = customerRepository.findByCif(customer.getCif());
         if (!customerSearch.isPresent())
         {
-            return customerRepository.save(customer);
+            Customer customerSaved = customerRepository.save(customer);
+            customerSaved.setDetail(
+                    productDetailService.saveProductDetail(new ProductDetail("<h1>Texto de prueba</h1>", customer))
+            );
+            return customerRepository.save(customerSaved);
         }
         else
         {
