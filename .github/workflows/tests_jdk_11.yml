@@ -17,11 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
-        working-directory: lca-customer
         uses: actions/setup-java@v1
         with:
           java-version: '11.0.8'
           java-package: jdk
           architecture: x64
       - name: Build with Maven
+        working-directory: lca-customer
         run: mvn -B package --file pom.xml
