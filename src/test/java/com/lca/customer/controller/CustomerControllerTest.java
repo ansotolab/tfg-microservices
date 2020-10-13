@@ -5,6 +5,7 @@ import com.lca.customer.exception.CustomerAlreadyExists;
 import com.lca.customer.exception.CustomerHasNotBeenDeleted;
 import com.lca.customer.exception.CustomerNotFound;
 import com.lca.customer.model.Customer;
+import com.lca.customer.model.ProductDetail;
 import com.lca.customer.service.CustomerService;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,11 +49,11 @@ public class CustomerControllerTest {
     @Before
     public void setUp() {
         this.customerList = new ArrayList<>();
-        this.customerList.add(new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre."));
-        this.customerList.add(new Customer(2L,"B0123456789", "La cooperativa Coop.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre."));
-        this.customerList.add(new Customer(3L,"C0123456789", "La sociedad S.A.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre."));
-        this.customerList.add(new Customer(4L,"D0123456789", "La PYME Autónomo.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre."));
-        this.customerList.add(new Customer(5L,"E0123456789", "La organización O.N.G.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre."));
+        this.customerList.add(new Customer(1L,"A0123456789", "La empresa S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail()));
+        this.customerList.add(new Customer(2L,"B0123456789", "La cooperativa Coop.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail()));
+        this.customerList.add(new Customer(3L,"C0123456789", "La sociedad S.A.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail()));
+        this.customerList.add(new Customer(4L,"D0123456789", "La PYME Autónomo.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail()));
+        this.customerList.add(new Customer(5L,"E0123456789", "La organización O.N.G.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail()));
     }
 
     /*
@@ -108,7 +109,7 @@ public class CustomerControllerTest {
      */
     @Test
     public void shouldSaveCustomerSuccesfully() {
-        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail());
 
         given(customerService.saveCustomer(customer)).willReturn(customer);
 
@@ -124,7 +125,7 @@ public class CustomerControllerTest {
 
     @Test
     public void shouldThrowErrorWhenSaveCustomerWithExistingCIF() {
-        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail());
 
         given(customerService.saveCustomer(customer)).willThrow(CustomerAlreadyExists.class);
 
@@ -142,7 +143,7 @@ public class CustomerControllerTest {
      */
     @Test
     public void shouldUpdateCustomerSuccesfully() {
-        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail());
 
         given(customerService.updateCustomer(customer)).willReturn(customer);
 
@@ -158,7 +159,7 @@ public class CustomerControllerTest {
 
     @Test
     public void shouldThrowErrorWhenUpdateCustomerThatNotExists() {
-        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail());
 
         given(customerService.updateCustomer(customer)).willThrow(CustomerNotFound.class);
 
@@ -173,7 +174,7 @@ public class CustomerControllerTest {
 
     @Test
     public void shouldThrowErrorWhenUpdateCustomerWithExistingID() {
-        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail());
 
         given(customerService.updateCustomer(customer)).willThrow(CustomerAlreadyExists.class);
 
@@ -191,7 +192,7 @@ public class CustomerControllerTest {
      */
     @Test
     public void shouldDeleteCustomerSuccessfully() {
-        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail());
 
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("result", "The customer with id: " + customer.getId() + " has been deleted.");
@@ -208,7 +209,7 @@ public class CustomerControllerTest {
 
     @Test
     public void shouldThrowErrorWhenDeleteCustomerThatNotExists() {
-        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.");
+        Customer customer = new Customer(10L,"Z0123456789", "La tienda S.L.", "Polígono Santa Luisa, Calle Constitución española, Nº 11, Planta 1º, Puerta A", "Torrejón de Ardoz", "01234", "España", "email@email.com", "987654321", "Pedro Colera, Luis Fernández", "El cliente suele pedir el 9 de marzo siempre.", new ProductDetail());
 
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("result", "The customer with id: " + customer.getId() + " has been deleted.");

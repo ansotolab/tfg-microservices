@@ -1,5 +1,6 @@
 package com.lca.customer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,4 +31,9 @@ public class Customer {
     private String people;
     @Lob
     private String observations;
+
+    @JsonIgnoreProperties("customer")
+    @OneToOne
+    @JoinColumn(name = "detail_id", referencedColumnName = "id")
+    private ProductDetail detail;
 }
