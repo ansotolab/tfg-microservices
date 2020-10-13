@@ -23,11 +23,11 @@ jobs:
           java-package: jdk
           architecture: x64
       - name: Cache Maven packages
-	uses: actions/cache@v2
-	with:
-	  path: ~/.m2
-	  key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-	  restore-keys: ${{ runner.os }}-m2
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
