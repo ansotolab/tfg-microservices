@@ -1,26 +1,8 @@
 version: "3.8"
 services:
-  lca-registry:
-    container_name: lca-registry
-    build: ./lca-registry
-    ports:
-      - '8761:8761'
-    expose:
-      - 8761
-  lca-gateway:
-    container_name: lca-gateway
-    build: ./lca-gateway
-    ports:
-      - '8762:8762'
-    expose:
-      - 8762
-    links:
-      - lca-registry
-    depends_on:
-      - lca-registry
   lca-customer:
     container_name: lca-customer
-    build: ./lca-customer
+    build: .
     ports:
       - '8200:8200'
     links:
