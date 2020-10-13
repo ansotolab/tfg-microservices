@@ -23,5 +23,4 @@ jobs:
           java-package: jdk
           architecture: x64
       - name: Build with Maven
-        working-directory: lca-customer
         run: mvn -B package --file pom.xml
