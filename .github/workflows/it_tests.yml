@@ -28,9 +28,13 @@ jobs:
           node-version: '12.x'
       - name: Run tests
         run: |
-          cd ./lca-registry && mvn spring-boot:run & && cd ../
-          cd ./lca-gateway && mvn spring-boot:run & && cd ../
-          cd ./lca-customer && mvn spring-boot:run & && cd ../
+          cd ./lca-registry
+          mvn spring-boot:run &
+          cd ../lca-gateway
+          mvn spring-boot:run &
+          cd ../lca-customer
+          mvn spring-boot:run &
+          cd ../
           npm install -g newman
           newman run ./it-postman/postman-customer.json
           
