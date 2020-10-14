@@ -2,9 +2,13 @@ server:
   port: 8762
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
-    service-url:
-      default-zone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
 
 spring:
   application:
