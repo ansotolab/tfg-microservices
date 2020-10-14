@@ -1,40 +1,43 @@
 version: "3.8"
+
 services:
-  lca-registry:
-    container_name: lca-registry
-    build: ./lca-registry
+  discovery:
+    container_name: service-discovery
+    build:
+      context: ./lca-registry
+      dockerfile: Dockerfile
     ports:
-      - '8761:8761'
-    expose:
-      - 8761
-  lca-gateway:
-    container_name: lca-gateway
-    build: ./lca-gateway
+      - "8761:8761"
+
+  gateway:
+    container_name: service-gateway
+    build:
+      context: ./lca-gateway
+      dockerfile: Dockerfile
     ports:
-      - '8762:8762'
-    expose:
-      - 8762
-    links:
-      - lca-registry
+      - "8762:8762"
     depends_on:
-      - lca-registry
-  lca-customer:
-    container_name: lca-customer
-    build: ./lca-customer
-    ports:
-      - '8200:8200'
+      - discovery
     links:
-      - lca-registry
-      - mysql-db
-    environment:
-      WAIT_HOSTS: mysql:3306
+      - discovery:discovery
+
+  customers:
+    container_name: service-customers-api
+    build:
+      context: ./lca-customer
+      dockerfile: Dockerfile
+    ports:
+      - "8200:8200"
     depends_on:
-      - lca-registry
-      - mysql-db
-    expose:
-      - 8200
-  mysql-db:
-    container_name: mysql
+      - discovery
+      - gateway
+      - customers-db
+    links:
+      - discovery:discovery
+      - customers-db
+
+  customers-db:
+    container_name: service-customers-db
     image: mysql:latest
     restart: always
     environment:
@@ -49,5 +52,18 @@ services:
       # <Port exposed> : < MySQL Port running inside container>
       - '3306:3306'
     expose:
-      # Opens port 3306 on the container
       - '3306'
+
+  frontend:
+    container_name: service-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - discovery
+      - gateway
+      - customers-db
+    links:
+      - gateway
