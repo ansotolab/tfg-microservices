@@ -22,6 +22,7 @@ jobs:
       - name: Run tests
         run: |
           docker-compose up -d
-          sleep 10
+          chmod 775 it-postman/wait.sh
+          it-postman/wait.sh
           npm install -g newman
           newman run it-postman/postman-customer.json
