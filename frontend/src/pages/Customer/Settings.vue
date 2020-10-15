@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-btn color="primary" large><v-icon class="mr-1" small>mdi-pencil</v-icon> Editar</v-btn>
+    <v-btn color="primary" large :to="{ name: 'edit', id:  this.$route.params.id }"><v-icon class="mr-1" small>mdi-pencil</v-icon> Editar</v-btn>
     <v-btn  @click="dialog = true"><v-icon class="mr-1" small>mdi-delete</v-icon> Eliminar</v-btn>
 
     <v-dialog
