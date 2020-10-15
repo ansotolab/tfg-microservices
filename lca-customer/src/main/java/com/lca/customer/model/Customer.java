@@ -36,7 +36,7 @@ public class Customer {
     private String observations;
 
     @JsonIgnoreProperties("customer")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "detail_id", referencedColumnName = "id")
     private ProductDetail detail;
 }
