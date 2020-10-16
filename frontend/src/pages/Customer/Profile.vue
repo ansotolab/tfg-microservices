@@ -22,7 +22,7 @@
 
     <p class="display-1 mt-5">
       Detalles
-      <v-btn class="ml-2" x-small :to="{ name: 'details', params: { id: customer.id }}"><v-icon class="mr-1" x-small>mdi-pencil</v-icon> Ajustes</v-btn>
+      <v-btn class="ml-2" x-small :to="{ name: 'details', params: { id: customer.id }}"><v-icon class="mr-1" x-small>mdi-pencil</v-icon> Editar</v-btn>
     </p>
     <v-card class="my-5 pa-6">
         <editor-content class="editor__content" :editor="editor" />

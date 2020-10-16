@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Index from "@/pages/Customer/index.vue";
 import Profile from "@/pages/Customer/Profile.vue";
+import Edit from "@/pages/Customer/Edit.vue";
 import Settings from "@/pages/Customer/Settings.vue";
 import Form from "@/pages/Customer/Form.vue";
 import DetailsEditor from "@/pages/Customer/DetailsEditor.vue";
@@ -24,6 +25,11 @@ const routes = [
     path: "/customers/:id",
     name: "profile",
     component: Profile
+  },
+  {
+    path: "/customers/:id/edit",
+    name: "edit",
+    component: Edit
   },
   {
     path: "/customers/:id/settings",
