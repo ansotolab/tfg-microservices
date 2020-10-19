@@ -22,19 +22,12 @@ public class ImageController {
 
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-        try {
             Image image = imageService.store(file);
             Map<String, Object> result = new HashMap<String, Object>();
             result.put("id", image.getId());
             result.put("name", image.getName());
             result.put("type", image.getType());
             return  ResponseEntity.status(HttpStatus.OK).body(result);
-        } catch (Exception e) {
-            Map<String, Object> result = new HashMap<String, Object>();
-            result.put("error", "It has been an error uploading the file.");
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(result);
-        }
     }
 
     @GetMapping("/{id}")

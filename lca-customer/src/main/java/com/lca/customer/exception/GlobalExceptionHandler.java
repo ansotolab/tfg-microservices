@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({CustomerNotFound.class, ProductDetailNotFound.class})
+    @ExceptionHandler({CustomerNotFound.class, ProductDetailNotFound.class, ImageNotFound.class})
     public ResponseEntity<Object> handleNotFoundEntity(RuntimeException ex, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CustomerAlreadyExists.class)
+    @ExceptionHandler({CustomerAlreadyExists.class, ImageExceededSize.class, ImageInvalidType.class})
     public ResponseEntity<Object> handleAlreadyExistsEntity(RuntimeException ex, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(CustomerHasNotBeenDeleted.class)
+    @ExceptionHandler({CustomerHasNotBeenDeleted.class, ImageIOError.class})
     public ResponseEntity<Object> handleHasNotBeenDeletedEntity(RuntimeException ex, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
