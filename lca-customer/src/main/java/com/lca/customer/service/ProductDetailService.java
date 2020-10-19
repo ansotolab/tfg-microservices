@@ -24,7 +24,7 @@ public class ProductDetailService {
 
         if (!productDetailSearched.isPresent())
         {
-            throw new ProductDetailNotFound("No se ha encontrado la descripción.");
+            throw new ProductDetailNotFound(productDetail.getId());
         }
         else
         {
@@ -38,7 +38,7 @@ public class ProductDetailService {
 
         if (!productDetailSearched.isPresent())
         {
-            throw new ProductDetailNotFound("No se ha encontrado la descripción.");
+            throw new ProductDetailNotFound(id);
         }
         else
         {
