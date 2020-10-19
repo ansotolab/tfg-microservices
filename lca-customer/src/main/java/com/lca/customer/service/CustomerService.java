@@ -23,7 +23,7 @@ public class CustomerService {
     public Customer getCustomer(long id) {
         return customerRepository
                 .findById(id)
-                .orElseThrow(() -> new CustomerNotFound("The customer with id: " + id + " does not exist."));
+                .orElseThrow(() -> new CustomerNotFound(id));
     }
 
     public List<Customer> getAll() {
@@ -59,12 +59,12 @@ public class CustomerService {
             }
             else
             {
-                throw new CustomerAlreadyExists("The customer with CIF: " + customer.getCif() + " already exists.");
+                throw new CustomerAlreadyExists(customerSearchCIF.get().getCif());
             }
         }
         else
         {
-            throw new CustomerNotFound("The customer with id: " + customer.getId() + " does not exist.");
+            throw new CustomerNotFound(customer.getId());
         }
     }
 
@@ -83,12 +83,12 @@ public class CustomerService {
             }
             else
             {
-                throw new CustomerHasNotBeenDeleted("The customer has not been deleted.");
+                throw new CustomerHasNotBeenDeleted(id);
             }
         }
         else
         {
-            throw new CustomerNotFound("The customer with id: " + id + " does not exist.");
+            throw new CustomerNotFound(id);
         }
     }
 }
