@@ -1,6 +1,5 @@
 <template>
 <v-container>
-  <img src="localhost:8762/images/1">
   <p class="display-1">
     {{ customer.name }}
   </p>
@@ -202,7 +201,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { GET_CUSTOMER, EDIT_DETAILS, FETCH_IMAGE } from "@/store/actions.type";
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -267,15 +266,12 @@ export default {
   },
   methods: {
     getOne() {
-      axios
-        .get("http://localhost:8762/customers/" + this.$route.params.id)
+      this.$store
+        .dispatch(GET_CUSTOMER, this.$route.params.id)
         .then((response) => {
           this.customer = response.data;
           this.detail = this.customer.detail
           this.editor.setContent(this.customer.detail.text);
-        })
-        .catch((error) => {
-          console.log(error);
         });
     },
     checkDifference() {
@@ -286,21 +282,17 @@ export default {
       }
     },
     saveDetails() {
-      axios.put('http://localhost:8762/details/' + this.detail.id, {
+      this.$store
+        .dispatch(EDIT_DETAILS, { 
+          slug: this.$route.params.id,
+          details: {
             id: this.detail.id,
             text: this.editor.getHTML(),
             customer: {
               id: this.customer.id
             }
-        }).then(() => {
-            this.$store.commit('setMsg', { type: 'success', text: 'Los detalles han sido actualizados.' });
-            this.detail.text = this.editor.getHTML();
-            this.saved = true;
-        }).catch(e => {
-            this.$store.commit('setMsg', { type: 'error', text: 'Ha habido un error en la operación.' });
-            this.errorResponse = e;
-            console.log(this.errorResponse)
-        });
+          }
+        })
     },
     uploadFile(command) {
       this.dialog = false;
@@ -308,19 +300,25 @@ export default {
         let formData = new FormData();
         //axios post
         formData.append("file", this.chosenFile, this.chosenFile.name)
-        axios.post("http://localhost:8762/images/", formData, {
+        this.$store
+          .dispatch(FETCH_IMAGE,formData)
+          .then(response => {
+            const src = "http://localhost:8762/api/images/" + response.data.id
+            command({ src })
+          });
+        /*axios.post("http://localhost:8762/api/images/", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           },
         }).then(response => {
             this.$store.commit('setMsg', { type: 'success', text: 'La imagen creada tiene id' + response.data.id + '.' });
             console.log(response)
-            const src = "http://localhost:8762/images/" + response.data.id
+            const src = "http://localhost:8762/api/images/" + response.data.id
             command({ src })
         }).catch(e => {
             this.$store.commit('setMsg', { type: 'error', text: 'Ha habido un error en la operación.' });
             this.errorResponse = e;
-        });
+        });*/
       }
     }
   },

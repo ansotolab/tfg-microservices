@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import axios from "axios"; 
+import { DELETE_CUSTOMER } from "@/store/actions.type";
 export default {
   name: "Settings",
   data: () => ({
@@ -47,13 +47,10 @@ export default {
   methods: {
     deleteCustomer() {
       this.dialog = false;
-      axios.delete('http://localhost:8762/customers/' + this.$route.params.id)
+      this.$store
+        .dispatch(DELETE_CUSTOMER, this.$route.params.id)
         .then(() => {
-            this.$store.commit('setMsg', { type: 'success', text: 'El cliente ha sido eliminado con éxito.' });
             this.$router.push('/customers/')
-        }).catch(e => {
-            this.$store.commit('setMsg', { type: 'error', text: 'Ha habido un error en la operación.' });
-            this.errorResponse = e;
         });
     }
   }

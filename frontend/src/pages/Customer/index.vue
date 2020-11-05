@@ -8,8 +8,9 @@
         dark
         right
         :to="{ name: 'form' }"
+        v-role="'ROLE_ADMIN'"
       >
-        <v-icon class="mr-1" small>mdi-plus-box</v-icon>
+        <v-icon  class="mr-1" small>mdi-plus-box</v-icon>
         Crear 
       </v-btn>
       </p>
@@ -47,7 +48,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import { FETCH_CUSTOMERS } from "@/store/actions.type";
+
 export default {
   name: "Index",
   data: () => ({
@@ -70,18 +72,15 @@ export default {
     ],
   }),
   mounted() {
-    this.getAll();
+    this.fetchCustomers();
   },
   methods: {
-    getAll() {
-      axios
-        .get("http://localhost:8762/customers/")
+    fetchCustomers() {
+      this.$store
+        .dispatch(FETCH_CUSTOMERS)
         .then((response) => {
-          this.customers = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          this.customers = response.data
+          });
     },
   },
 };

@@ -96,8 +96,8 @@
 </template>
 
 <script>
-
-import axios from "axios"; 
+import { CREATE_CUSTOMER } from "@/store/actions.type";
+// import axios from "axios"; 
   export default {
     name: 'Form',
     data: () => ({
@@ -154,7 +154,7 @@ import axios from "axios";
     }),
     methods: {
       send() {
-        axios.post('http://localhost:8762/customers/', {
+        this.customer= {
             cif: this.cif,
             name: this.name,
             address: this.address,
@@ -165,12 +165,11 @@ import axios from "axios";
             phone: this.phone,
             people: this.people,
             observations: this.observations,
-        }).then(response => {
-            this.$store.commit('setMsg', { type: 'success', text: 'El cliente ha sido guardado con éxito.' });
+          }
+        this.$store
+        .dispatch(CREATE_CUSTOMER, this.customer)
+        .then(response => {
             this.$router.push('/customers/' + response.data.id)
-        }).catch(e => {
-            this.$store.commit('setMsg', { type: 'error', text: 'Ha habido un error en la operación.' });
-            this.errorResponse = e;
         });
       }
     }

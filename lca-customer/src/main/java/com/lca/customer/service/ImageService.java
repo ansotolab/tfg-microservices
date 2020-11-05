@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ImageService {
@@ -48,12 +49,12 @@ public class ImageService {
         }
     }
 
-    public Image getFile(long id) {
+    public Image getFile(UUID id) {
         Optional<Image> imageSearched = imageRepository.findById(id);
 
         if (!imageSearched.isPresent())
         {
-            throw new ImageNotFound(id);
+            throw new ImageNotFound(id.toString());
         }
         else
         {

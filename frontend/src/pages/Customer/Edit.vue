@@ -97,7 +97,7 @@
 
 <script>
 
-import axios from "axios"; 
+import { GET_CUSTOMER, EDIT_CUSTOMER } from "@/store/actions.type";
   export default {
     name: 'Edit',
     data: () => ({
@@ -158,7 +158,7 @@ import axios from "axios";
     },
     methods: {
       send() {
-        axios.put('http://localhost:8762/customers/' + this.$route.params.id, {
+        this.customer= {
             cif: this.cif,
             name: this.name,
             address: this.address,
@@ -169,18 +169,20 @@ import axios from "axios";
             phone: this.phone,
             people: this.people,
             observations: this.observations,
-        }).then(response => {
-            this.$store.commit('setMsg', { type: 'success', text: 'El cliente ha sido guardado con éxito.' });
+          }
+        this.$store
+        .dispatch(EDIT_CUSTOMER, {
+          id: this.$route.params.id,
+          customer: this.customer
+        })
+        .then(response => {
             this.$router.push('/customers/' + response.data.id)
-        }).catch(e => {
-            this.$store.commit('setMsg', { type: 'error', text: 'Ha habido un error en la operación.' });
-            this.errorResponse = e;
         });
       },
       getOne() {
-        axios
-          .get("http://localhost:8762/customers/" + this.$route.params.id)
-          .then((response) => {
+        this.$store
+        .dispatch(GET_CUSTOMER, this.$route.params.id)
+        .then((response) => {
             this.customer = response.data
             this.cif = this.customer.cif
             this.name = this.customer.name
@@ -192,9 +194,6 @@ import axios from "axios";
             this.phone = this.customer.phone
             this.people = this.customer.people
             this.observations = this.customer.observations
-          })
-          .catch((error) => {
-            console.log(error);
           });
       }
     }

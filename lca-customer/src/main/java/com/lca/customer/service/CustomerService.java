@@ -55,6 +55,7 @@ public class CustomerService {
             Optional<Customer> customerSearchCIF = customerRepository.findByCifAndIdNot(customer.getCif(), customer.getId());
             if (!customerSearchCIF.isPresent())
             {
+                customer.setDetail(customerSearch.get().getDetail());
                 return customerRepository.save(customer);
             }
             else
