@@ -11,6 +11,8 @@ import DetailsEditor from "@/pages/Customer/DetailsEditor.vue";
 import LoginPage from "@/pages/Login/LoginPage.vue";
 import NotFoundPage from "@/pages/Error/404.vue";
 import ForbiddenPage from "@/pages/Error/403.vue";
+import ListUsersPage from "@/pages/User/ListUsersPage.vue";
+import RegisterUserPage from "@/pages/User/RegisterUserPage.vue";
 
 import { CHECK_AUTH } from "@/store/actions.type"
 
@@ -79,6 +81,22 @@ const routes = [
     path: "/forbidden",
     name: "forbidden",
     component: ForbiddenPage,
+  },
+  {
+    path: "/users",
+    name: "users",
+    component: ListUsersPage,
+    meta: {
+      authorities: 'ROLE_ADMIN'
+    }
+  },
+  {
+    path: "/users/new",
+    name: "users-new",
+    component: RegisterUserPage,
+    meta: {
+      authorities: 'ROLE_ADMIN'
+    }
   }
 ];
 

@@ -112,3 +112,28 @@ export const ImagesService = {
       .catch(() => store.dispatch(SEND_ALERT, { msg: 'Ha habido un error en la operación.', type: 'error' } ) );
   }
 };
+
+export const UsersService = {
+  getAuthorities(slug) {
+    return ApiService.get("auth/authorities", slug);
+  },
+  getUsers(slug) {
+    return ApiService.get("auth/users", slug);
+  },
+  registerUser(params) {
+    return ApiService.post("auth/register", params)
+      .then((data) => {
+        store.dispatch(SEND_ALERT, { msg: 'Se ha creado correctamente el usuario.', type: 'success' } );
+        return data;
+      })
+      .catch(() => store.dispatch(SEND_ALERT, { msg: 'Ha habido un error en la operación.', type: 'error' } ) );
+  },
+  updateUser(params) {
+    return ApiService.post("auth/update", params)
+      .then((data) => {
+        store.dispatch(SEND_ALERT, { msg: 'Se ha actualizado correctamente el usuario.', type: 'success' } );
+        return data;
+      })
+      .catch(() => store.dispatch(SEND_ALERT, { msg: 'Ha habido un error en la operación.', type: 'error' } ) );
+  }
+};

@@ -6,6 +6,7 @@ import customers from "./customers.module"
 import details from "./details.module"
 import images from "./images.module"
 import alerts from "./alerts.module"
+import users from "./users.module"
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ export default new Vuex.Store({
     customers,
     details,
     images,
-    alerts
+    alerts,
+    users
   }
 })
   

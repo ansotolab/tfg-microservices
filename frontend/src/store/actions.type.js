@@ -18,3 +18,10 @@ export const FETCH_IMAGE = "fetchImage";
 
 // ALERTS
 export const SEND_ALERT = "sendAlert";
+
+// USERS
+export const FETCH_AUTHORITIES = "fetchAuthorities";
+export const FETCH_USERS = "fetchUsers";
+export const CREATE_USER = "createUser";
+export const EDIT_USER = "editUser";
+export const GET_USER = "getUser";
