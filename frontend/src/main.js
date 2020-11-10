@@ -8,7 +8,6 @@ import './directives'
 import ApiService from "./common/api.service"
 import ErrorFilter from "./common/error.filter"
 
-
 Vue.filter("error", ErrorFilter);
 
 ApiService.init();

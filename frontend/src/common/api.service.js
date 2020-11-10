@@ -19,15 +19,11 @@ const ApiService = {
   },
 
   query(resource, params) {
-    return Vue.axios.get(resource, params).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
-    });
+    return Vue.axios.get(resource, params);
   },
 
   get(resource, slug = "") {
-    return Vue.axios.get(`${resource}/${slug}`).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
-    });
+    return Vue.axios.get(`${resource}/${slug}`);
   },
 
   post(resource, params) {
@@ -53,9 +49,7 @@ const ApiService = {
   },
 
   delete(resource) {
-    return Vue.axios.delete(resource).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
-    });
+    return Vue.axios.delete(resource);
   }
 };
 

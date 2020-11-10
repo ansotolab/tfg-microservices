@@ -1,6 +1,6 @@
 <template>
 <v-container>
-  <p class="display-1">Nuevo usuario</p>    
+  <p class="display-1">Editar usuario</p>    
   <v-form
     ref="form"
     v-model="valid"
@@ -40,10 +40,9 @@
     <v-text-field
       v-model="password"
       :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-      :rules="passwordRules"
       :type="'password'"
       name="input-10-1"
-      label="Contraseña"
+      label="Nueva contraseña (opcional)"
     ></v-text-field>
 
     <v-text-field
@@ -84,15 +83,17 @@
 </template>
 
 <script>
-import { CREATE_USER, FETCH_AUTHORITIES } from "@/store/actions.type";
+import { EDIT_USER, GET_USER, FETCH_AUTHORITIES } from "@/store/actions.type";
 
 
   export default {
     name: 'Form',
     data: () => ({
       valid: false,
+      user: {},
       authoritiesList: [],
       showPass: false,
+      id: null,
       username: '',
       usernameRules: [
         v => !!v || 'El nombre de usuario es obligatorio',
@@ -114,9 +115,6 @@ import { CREATE_USER, FETCH_AUTHORITIES } from "@/store/actions.type";
         v => /.+@.+\..+/.test(v) || 'E-mail debe ser válido',
       ],
       password: '',
-      passwordRules: [
-        v => !!v || 'La contraseña es obligatoria'
-      ],
       passwordCheck: '',
       activated: true,
       authorities: []
@@ -124,25 +122,37 @@ import { CREATE_USER, FETCH_AUTHORITIES } from "@/store/actions.type";
     methods: {
       send() {
         const user = {
+            id: this.id,
             username: this.username,
+            password: this.password,
             firstname: this.firstname,
             lastname: this.lastname,
             email: this.email,
             activated: this.activated,
-            authorities: this.authorities.map((e) => { return { "name": e }; }),
-            password: this.password
+            authorities: this.authorities
           }
         this.$store
-        .dispatch(CREATE_USER, user)
+        .dispatch(EDIT_USER, user)
         .then(() => {
             this.$router.push('/users/')
         })
-        .catch(() => {
+        .catch((e) => {
+          console.log(e)
         });
       }
     },
     mounted() {
       this.$store.dispatch(FETCH_AUTHORITIES).then(response => { this.authoritiesList = response.data });
+      this.$store.dispatch(GET_USER, this.$route.params.id).then(response => { 
+        this.user = response.data,
+        this.id = response.data.id,
+        this.username = response.data.username,
+        this.firstname = response.data.firstname,
+        this.lastname = response.data.lastname,
+        this.email = response.data.email,
+        this.activated = response.data.activated,
+        this.authorities = response.data.authorities
+     });
     }
   }
 </script>

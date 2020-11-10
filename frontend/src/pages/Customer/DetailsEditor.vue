@@ -1,6 +1,15 @@
 <template>
 <v-container>
   <p class="display-1">
+
+    <router-link :to="'/customers/'+this.$route.params.id" class="btn btn-md show">
+    <v-icon
+        medium
+        class="mr-2"
+    >
+        mdi-arrow-left
+    </v-icon>
+    </router-link>
     {{ customer.name }}
   </p>
   <div class="editor">

@@ -13,18 +13,20 @@ import NotFoundPage from "@/pages/Error/404.vue";
 import ForbiddenPage from "@/pages/Error/403.vue";
 import ListUsersPage from "@/pages/User/ListUsersPage.vue";
 import RegisterUserPage from "@/pages/User/RegisterUserPage.vue";
+import EditUserPage from "@/pages/User/EditUserPage.vue";
 
 import { CHECK_AUTH } from "@/store/actions.type"
 
 Vue.use(VueRouter)
 
 const routes = [
+  { path: '/', redirect: { name: 'customers' }},
   {
     path: "/customers/",
     name: "customers",
     component: Index,
     meta: {
-      authorities: 'ROLE_USER'
+      authorities: 'VIEW_CUSTOMER'
     }
   },
   {
@@ -32,7 +34,7 @@ const routes = [
     name: "form",
     component: Form,
     meta: {
-      authorities: 'ROLE_ADMIN'
+      authorities: 'EDIT_CUSTOMER'
     }
   },
   {
@@ -40,7 +42,7 @@ const routes = [
     name: "profile",
     component: Profile,
     meta: {
-      authorities: 'ROLE_USER'
+      authorities: 'VIEW_CUSTOMER'
     }
   },
   {
@@ -48,7 +50,7 @@ const routes = [
     name: "edit",
     component: Edit,
     meta: {
-      authorities: 'ROLE_ADMIN'
+      authorities: 'EDIT_CUSTOMER'
     }
   },
   {
@@ -56,7 +58,7 @@ const routes = [
     name: "settings",
     component: Settings,
     meta: {
-      authorities: 'ROLE_ADMIN'
+      authorities: 'EDIT_CUSTOMER'
     }
   },
   {
@@ -64,7 +66,7 @@ const routes = [
     name: "details",
     component: DetailsEditor,
     meta: {
-      authorities: 'ROLE_ADMIN'
+      authorities: 'EDIT_CUSTOMER'
     }
   },
   {
@@ -87,7 +89,7 @@ const routes = [
     name: "users",
     component: ListUsersPage,
     meta: {
-      authorities: 'ROLE_ADMIN'
+      authorities: 'EDIT_USER'
     }
   },
   {
@@ -95,7 +97,15 @@ const routes = [
     name: "users-new",
     component: RegisterUserPage,
     meta: {
-      authorities: 'ROLE_ADMIN'
+      authorities: 'EDIT_USER'
+    },
+  },
+  {
+    path: "/users/:id/edit",
+    name: "users-edit",
+    component: EditUserPage,
+    meta: {
+      authorities: 'EDIT_USER'
     }
   }
 ];

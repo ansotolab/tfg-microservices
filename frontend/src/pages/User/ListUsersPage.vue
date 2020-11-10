@@ -8,7 +8,7 @@
         dark
         right
         :to="{ name: 'users-new' }"
-        v-role="'ROLE_ADMIN'"
+        v-role="'EDIT_USER'"
       >
         <v-icon  class="mr-1" small>mdi-plus-box</v-icon>
         Crear 
@@ -32,8 +32,25 @@
         class="elevation-1"
         :search="search"
       >
+      <template v-slot:[`item.activated`]="{ item }">
+            
+            <v-icon
+                small
+                class="mr-2"
+              v-if="!item.activated"
+            >
+                mdi-checkbox-blank-circle-outline
+            </v-icon>
+            <v-icon
+                small
+                class="mr-2"
+              v-if="item.activated"
+            >
+                mdi-checkbox-marked-circle-outline
+            </v-icon>
+        </template>
         <template v-slot:[`item.actions`]="{ item }">
-            <router-link :to="'/user/'+item.id+'/edit'" class="btn btn-sm show">
+            <router-link :to="'/users/'+item.id+'/edit'" class="btn btn-sm show">
             <v-icon
                 small
                 class="mr-2"
@@ -65,6 +82,11 @@ export default {
       { text: "Nombre", value: "firstname" },
       { text: "Apellidos", value: "lastname" },
       { text: "Email", value: "email" },
+      { 
+        text: "Activado", 
+        sortable: true,
+        value: "activated" 
+      },
       { 
         text: "", 
         sortable: false,
