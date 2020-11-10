@@ -1,0 +1,57 @@
+server:
+  servlet:
+    context-path: /
+
+# better readable jackson serialization format
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/db?allowPublicKeyRetrieval=true&useSSL=false
+    username: user
+    password: password
+    initialization-mode: always
+    sqlScriptEncoding: UTF-8
+
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  #h2:
+    #console:
+      # URL: jdbc:h2:mem:testdb
+      #enabled: true
+
+  devtools:
+    restart:
+      enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+
+jwt:
+  header: Authorization
+  # This token must be encoded using Base64 with mininum 88 Bits (you can type `echo 'secret-key'|base64` on your command line)
+  base64-secret: UyFrUll3YERnayYhZyQ8PDRiRVJnWn53U2hCJWhGbSU9P0ZxOE44Yj1qREhKK3ZpU0dmQWZgZj1OZVJXfkEkKzZ+aU5hXl5mdzNOeD9XJld1PVJDPkUyR0ZTQHltemc4PVReeVk1bj9LVE4rM3VKeHh4PXRmc3BZYnBeYDxeUUc=
+  # token is valid 24 hours
+  token-validity-in-seconds: 86400
+  # valid 30 hours
+  token-validity-in-seconds-for-remember-me: 108000
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
+logging:
+  level:
+    org.zerhusen.security: DEBUG
+#    org.springframework.security: DEBUG
+
