@@ -12,14 +12,38 @@ services:
   gateway:
     container_name: service-gateway
     build:
-      context: ./lca-gateway
+      context: ./lca-gateway-secured
       dockerfile: Dockerfile
+    environment: 
+      SPRING_DATASOURCE_URL: ${GATEWAY_SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${GATEWAY_MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${GATEWAY_MYSQL_PASSWORD}
+      SPRING_DATASOURCE_INITIALIZATION-MODE: ${GATEWAY_SPRING_DATASOURCE_INITIALIZATION}
+      SPRING_JPA_HIBERNATE_DDL-AUTO: ${GATEWAY_SPRING_JPA_HIBERNATE_DLL}
     ports:
       - "8762:8762"
     depends_on:
       - discovery
+      - gateway-db
     links:
       - discovery:discovery
+      - gateway-db
+
+  gateway-db:
+    container_name: service-gateway-db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${GATEWAY_MYSQL_DATABASE}
+      MYSQL_USER: ${GATEWAY_MYSQL_USER}
+      MYSQL_PASSWORD: ${GATEWAY_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${GATEWAY_MYSQL_ROOT_PASSWORD}
+    ports:
+      - '33060:3306'
+    expose:
+      - '33060'
+    volumes:
+      - ${GATEWAY_MYSQL_VOLUME}:/var/lib/mysql
 
   customers:
     container_name: service-customers-api
@@ -27,11 +51,12 @@ services:
       context: ./lca-customer
       dockerfile: Dockerfile
     environment: 
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
-      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
-      SPRING_DATASOURCE_INITIALIZATION-MODE: ${SPRING_DATASOURCE_INITIALIZATION}
-      SPRING_JPA_HIBERNATE_DDL-AUTO: ${SPRING_JPA_HIBERNATE_DLL}
+      SPRING_DATASOURCE_URL: ${CUSTOMER_SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${CUSTOMER_MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${CUSTOMER_MYSQL_PASSWORD}
+      SPRING_DATASOURCE_INITIALIZATION-MODE: ${CUSTOMER_SPRING_DATASOURCE_INITIALIZATION}
+      SPRING_JPA_HIBERNATE_DDL-AUTO: ${CUSTOMER_SPRING_JPA_HIBERNATE_DLL}
+      #EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://discovery:8761/eureka/
     ports:
       - "8200:8200"
     depends_on:
@@ -47,16 +72,16 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${CUSTOMER_MYSQL_DATABASE}
+      MYSQL_USER: ${CUSTOMER_MYSQL_USER}
+      MYSQL_PASSWORD: ${CUSTOMER_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${CUSTOMER_MYSQL_ROOT_PASSWORD}
     ports:
-      - '3306:3306'
+      - '33061:3306'
     expose:
-      - '3306'
+      - '33061'
     volumes:
-      - ${MYSQL_VOLUME}:/var/lib/mysql
+      - ${CUSTOMER_MYSQL_VOLUME}:/var/lib/mysql
 
   frontend:
     container_name: service-frontend
