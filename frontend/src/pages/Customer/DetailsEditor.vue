@@ -1,4 +1,4 @@
-<style scoped>
+<style>
 img {
   width: 100% !important;
   max-width: 500px !important;

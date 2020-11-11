@@ -129,7 +129,7 @@ import { EDIT_USER, GET_USER, FETCH_AUTHORITIES } from "@/store/actions.type";
             lastname: this.lastname,
             email: this.email,
             activated: this.activated,
-            authorities: this.authorities
+            authorities: this.authorities.map((e) => { return { "name": e }; })
           }
         this.$store
         .dispatch(EDIT_USER, user)
