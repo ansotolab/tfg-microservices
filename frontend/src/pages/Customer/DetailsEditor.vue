@@ -293,7 +293,7 @@ export default {
     saveDetails() {
       this.$store
         .dispatch(EDIT_DETAILS, { 
-          slug: this.$route.params.id,
+          slug: this.detail.id,
           details: {
             id: this.detail.id,
             text: this.editor.getHTML(),
