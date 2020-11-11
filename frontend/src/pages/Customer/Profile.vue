@@ -1,7 +1,7 @@
 <style scoped>
 img {
-  width: 100%;
-  max-width: 500px;
+  width: 100% !important;
+  max-width: 500px !important;
 }
 </style>
 
