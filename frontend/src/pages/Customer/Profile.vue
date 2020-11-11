@@ -1,3 +1,10 @@
+<style scoped>
+img {
+  width: 100%;
+  max-width: 500px;
+}
+</style>
+
 <template>
   <v-container>
       <v-card v-if="customer.id">
