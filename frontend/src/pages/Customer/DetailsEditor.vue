@@ -312,7 +312,7 @@ export default {
         this.$store
           .dispatch(FETCH_IMAGE,formData)
           .then(response => {
-            const src = process.env.BACKEND_API + "/api/images/" + response.data.id
+            const src = process.env.VUE_APP_BACKEND_API + "/api/images/" + response.data.id
             command({ src })
           });
         /*axios.post("http://localhost:8762/api/images/", formData, {
