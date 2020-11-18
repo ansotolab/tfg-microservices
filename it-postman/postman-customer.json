@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "80d81df4-5cea-4888-bd32-ca48c5aadf6c",
-		"name": "OpenAPI definition",
+		"_postman_id": "5e611f12-9b63-4444-b5a1-073b987ecc53",
+		"name": "OpenAPI definition Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -17,7 +17,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "f4da1992-db26-421d-bc64-bbb8b728913f",
+										"id": "71698929-c18a-43db-99f2-266b76713803",
 										"exec": [
 											"pm.test(\"Get all customers\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -31,7 +31,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "91f2ee1e-4d02-4ef3-a40e-33300c6e607c",
+										"id": "6ece439b-7738-41d1-a54b-2070df47c9e4",
 										"exec": [
 											""
 										],
@@ -88,7 +88,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "c7f6cbbe-48a8-4a4f-8740-d1103168f558",
+										"id": "e871cda6-50f3-426a-a88b-e8537b09cdd9",
 										"exec": [
 											"pm.test(\"Post customer\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -170,7 +170,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e6aacafd-a182-4f9f-b15c-95684ed88ae0",
+										"id": "6d17796c-adbe-48a9-8e9a-7dc3ceafa86f",
 										"exec": [
 											"pm.test(\"Get customer with id: 1\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -245,7 +245,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5b917bee-ebc7-453e-bdd5-c017cb412e3b",
+										"id": "a380cb91-680e-40e1-8151-74b3088691e8",
 										"exec": [
 											"pm.test(\"Update customer\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -334,7 +334,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5b48e6ad-9979-40a1-86cc-80fa078d0649",
+										"id": "74ad8b36-6be8-4d23-b4f9-e1e566f4f2d6",
 										"exec": [
 											"pm.test(\"Throw 400 when update a customer with existing CIF\", function () {",
 											"    pm.response.to.have.status(400);",
@@ -346,7 +346,7 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "7b411641-401b-4a49-b2e2-d7a2b2a51b85",
+										"id": "0b4e6c6d-630f-437a-ae5c-2e63581812ff",
 										"exec": [
 											""
 										],
@@ -377,9 +377,9 @@
 									],
 									"variable": [
 										{
-											"description": "(Required) ",
 											"key": "id",
-											"value": "1"
+											"value": "1",
+											"description": "(Required) "
 										}
 									]
 								}
@@ -430,7 +430,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "cc23faca-3c93-4823-9343-5e93acd2b51b",
+										"id": "5d63f1fd-4aca-4362-a95b-1f2c1c9e906b",
 										"exec": [
 											"pm.test(\"Update customer\", function () {",
 											"    pm.response.to.have.status(200);",
@@ -502,6 +502,38 @@
 					"_postman_isSubFolder": true
 				}
 			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4c3f35da-5a32-4d4e-a157-32da55a74f64",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a498d53f-dfcd-45d1-8a93-18b3c5bcf805",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
 			"protocolProfileBehavior": {}
 		}
 	],
@@ -509,17 +541,40 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "2841a782-4033-4593-81e6-188ee894ae19",
+				"id": "710d0c34-30b1-4ee2-8b8e-8beb8cd275e4",
 				"type": "text/javascript",
 				"exec": [
-					"pm.collectionVariables.set(\"baseUrl\", \"localhost:8762\");"
+					"pm.collectionVariables.set(\"baseUrl\", \"localhost:8762/api\");",
+					"",
+					"const echoPostRequest = {",
+					"  url: 'http://localhost:8762/auth/login',",
+					"  method: 'POST',",
+					"  header: 'Content-Type:application/json',",
+					"  body: {",
+					"    mode: 'application/json',",
+					"    raw: JSON.stringify(",
+					"        {",
+					"        \t'username':'admin',",
+					"        \t'password':'admin'",
+					"        })",
+					"  }",
+					"};",
+					"",
+					"pm.sendRequest(echoPostRequest, function (err, res) {",
+					"    console.log(err ? err : res.json());",
+					"    if (err === null) {",
+					"        console.log('Saving the token.')",
+					"        var responseJson = res.json();",
+					"        pm.environment.set('auth_token', responseJson.id_token)",
+					"    }",
+					"});"
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "36a92776-52dd-498c-942d-885a9a7ae74a",
+				"id": "a84402ec-c636-4021-b57b-0423f06f56cd",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -529,7 +584,7 @@
 	],
 	"variable": [
 		{
-			"id": "82d70e85-dc2f-4433-b900-bc72474f7b9b",
+			"id": "0bc41eb4-adb7-4d06-90aa-6863e5fe7552",
 			"key": "baseUrl",
 			"value": "http://10.0.2.15:8200"
 		}
