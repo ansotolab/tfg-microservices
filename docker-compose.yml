@@ -66,6 +66,7 @@ services:
     links:
       - discovery:discovery
       - customers-db
+    command: ["../wait.sh", "customers-db:3306"]
 
   customers-db:
     container_name: service-customers-db
