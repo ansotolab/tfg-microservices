@@ -1,0 +1,538 @@
+{
+	"info": {
+		"_postman_id": "80d81df4-5cea-4888-bd32-ca48c5aadf6c",
+		"name": "OpenAPI definition",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "",
+					"item": [
+						{
+							"name": "get All Customers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f4da1992-db26-421d-bc64-bbb8b728913f",
+										"exec": [
+											"pm.test(\"Get all customers\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    const responseJson = pm.response.json();",
+											"    pm.expect(responseJson).to.lengthOf(3);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "91f2ee1e-4d02-4ef3-a40e-33300c6e607c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/customers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "default response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/customers",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "create Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c7f6cbbe-48a8-4a4f-8740-d1103168f558",
+										"exec": [
+											"pm.test(\"Post customer\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    const responseCustomer = pm.response.json();",
+											"    const newCustomer = JSON.parse(pm.request.body);",
+											"    pm.expect(responseCustomer.cif).to.eql(newCustomer.cif);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"address\": \"Avenida La libertad nº 21 Piso 2º Puerta A\",\n    \"cif\": \"D123456789\",\n    \"city\": \"Almería\",\n    \"country\": \"España\",\n    \"name\": \"La Compañía S.L.\",\n    \"postalCode\": \"01234\",\n    \"email\": \"compañía@email.com\",\n    \"phone\": \"987654321\",\n    \"people\": \"Pedro José Fernández, Francisco Felipe Herrero\",\n    \"observations\": \"PAGO POR ADELANTADO: Este cliente tiene 3 pedidos sin pagar.\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/customers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "default response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"address\": \"<string>\",\n    \"cif\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"postalCode\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"people\": \"<string>\",\n    \"observations\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/customers",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "get Customers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e6aacafd-a182-4f9f-b15c-95684ed88ae0",
+										"exec": [
+											"pm.test(\"Get customer with id: 1\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    const responseJson = pm.response.json();",
+											"    pm.expect(responseJson.cif).to.eql(\"A123456789\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/customers/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "default response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/customers/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "update Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5b917bee-ebc7-453e-bdd5-c017cb412e3b",
+										"exec": [
+											"pm.test(\"Update customer\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    const responseCustomer = pm.response.json();",
+											"    const updateCustomer = JSON.parse(pm.request.body);",
+											"    pm.expect(responseCustomer.cif).to.eql(updateCustomer.cif);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"address\": \"Avenida La libertad nº 21 Piso 2º Puerta A\",\n    \"cif\": \"Z123456789\",\n    \"city\": \"Almería\",\n    \"country\": \"España\",\n    \"name\": \"La Compañía S.L.\",\n    \"postalCode\": \"01234\",\n    \"email\": \"compañía@email.com\",\n    \"phone\": \"987654321\",\n    \"people\": \"Pedro José Fernández, Francisco Felipe Herrero\",\n    \"observations\": \"PAGO POR ADELANTADO: Este cliente tiene 3 pedidos sin pagar.\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/customers/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "default response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"address\": \"<string>\",\n    \"cif\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"postalCode\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"people\": \"<string>\",\n    \"observations\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/customers/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Error when update with existing CIF",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5b48e6ad-9979-40a1-86cc-80fa078d0649",
+										"exec": [
+											"pm.test(\"Throw 400 when update a customer with existing CIF\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7b411641-401b-4a49-b2e2-d7a2b2a51b85",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"address\": \"Avenida La libertad nº 21 Piso 2º Puerta A\",\n    \"cif\": \"B123456789\",\n    \"city\": \"Almería\",\n    \"country\": \"España\",\n    \"name\": \"La Compañía S.L.\",\n    \"postalCode\": \"01234\",\n    \"email\": \"compañía@email.com\",\n    \"phone\": \"987654321\",\n    \"people\": \"Pedro José Fernández, Francisco Felipe Herrero\",\n    \"observations\": \"PAGO POR ADELANTADO: Este cliente tiene 3 pedidos sin pagar.\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/customers/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers",
+										":id"
+									],
+									"variable": [
+										{
+											"description": "(Required) ",
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "default response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"address\": \"<string>\",\n    \"cif\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"postalCode\": \"<string>\",\n    \"email\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"people\": \"<string>\",\n    \"observations\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/customers/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "delete Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cc23faca-3c93-4823-9343-5e93acd2b51b",
+										"exec": [
+											"pm.test(\"Update customer\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/customers/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"customers",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "default response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/customers/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"customers",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2841a782-4033-4593-81e6-188ee894ae19",
+				"type": "text/javascript",
+				"exec": [
+					"pm.collectionVariables.set(\"baseUrl\", \"localhost:8762\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "36a92776-52dd-498c-942d-885a9a7ae74a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "82d70e85-dc2f-4433-b900-bc72474f7b9b",
+			"key": "baseUrl",
+			"value": "http://10.0.2.15:8200"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
