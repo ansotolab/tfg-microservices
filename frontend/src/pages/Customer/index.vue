@@ -8,8 +8,9 @@
         dark
         right
         :to="{ name: 'form' }"
+        v-role="'EDIT_CUSTOMER'"
       >
-        <v-icon class="mr-1" small>mdi-plus-box</v-icon>
+        <v-icon  class="mr-1" small>mdi-plus-box</v-icon>
         Crear 
       </v-btn>
       </p>
@@ -31,6 +32,10 @@
         class="elevation-1"
         :search="search"
       >
+
+        <template v-slot:[`item.country`]="{ item }">
+          <Flag v-bind:code="item.code" /> {{ item.country }}
+        </template>
         <template v-slot:[`item.actions`]="{ item }">
             <router-link :to="'/customers/'+item.id" class="btn btn-sm show">
             <v-icon
@@ -47,10 +52,18 @@
 </template>
 
 <script>
-import axios from "axios";
+import { FETCH_CUSTOMERS } from "@/store/actions.type";
+import Flag from "@/components/Flag";
+import listCountries from "i18n-iso-countries";
+
 export default {
   name: "Index",
+  components: {
+    Flag,
+  }, 
+
   data: () => ({
+    countries: listCountries,
     customers: [],
     search: "",
     headers: [
@@ -70,19 +83,26 @@ export default {
     ],
   }),
   mounted() {
-    this.getAll();
+    listCountries.registerLocale(require("i18n-iso-countries/langs/es.json"));
+    this.fetchCustomers();
   },
   methods: {
-    getAll() {
-      axios
-        .get("http://localhost:8762/customers/")
+    fetchCustomers() {
+      this.$store
+        .dispatch(FETCH_CUSTOMERS)
         .then((response) => {
-          this.customers = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+              this.customers = response.data.map((e) => { return {
+                id: e.id,
+                name: e.name,
+                cif: e.cif,
+                code: e.country,
+                country: this.countries.getName(e.country, "es", {select: "official"})
+              } })
+          });
     },
+  },
+  computed() {
+    listCountries.registerLocale(require("i18n-iso-countries/langs/es.json"));
   },
 };
 </script>

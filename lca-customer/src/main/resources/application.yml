@@ -6,7 +6,7 @@ spring:
     name: customer-service
 
   datasource:
-    url: jdbc:mysql://customers-db:3306/db?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/db?allowPublicKeyRetrieval=true&useSSL=false
     username: user
     password: password
     initialization-mode: always

@@ -1,9 +1,6 @@
 <template>
 <v-container>
-    <v-alert type="error" v-if="errorResponse.count">
-      Ha habido un error al crear el cliente.
-    </v-alert>
-    <p class="display-1">Nuevo Cliente</p>    
+  <p class="display-1">Editar Cliente</p>    
   <v-form
     ref="form"
     v-model="valid"
@@ -21,7 +18,7 @@
       v-model="name"
       :counter="100"
       :rules="nameRules"
-      label="Name"
+      label="Nombre"
       required
     ></v-text-field>
 
@@ -29,7 +26,7 @@
       v-model="address"
       :counter="100"
       :rules="addressRules"
-      label="Address"
+      label="Dirección"
       required
     ></v-text-field>
 
@@ -37,24 +34,49 @@
       v-model="city"
       :counter="100"
       :rules="cityRules"
-      label="City"
+      label="Ciudad"
       required
     ></v-text-field>
 
     <v-text-field
       v-model="postalCode"
       :rules="postalCodeRules"
-      label="Postal Code"
+      label="Código postal"
       required
     ></v-text-field>
 
-    <v-select
+    <v-autocomplete
       v-model="country"
+      :rules="[v => !!v || 'El pais es obligatorio']"
+      label="País"
       :items="countries"
-      :rules="[v => !!v || 'Country is required']"
-      label="Country"
+      item-text="country"
+      item-value="code"
       required
-    ></v-select>
+      auto-select-first
+      chips
+      clearable
+    >
+      <template v-slot:selection="data">
+        <v-chip
+          v-bind="data.attrs"
+          :input-value="data.selected"
+          close
+          @click="data.select"
+          @click:close="remove(data.item)"
+        >
+          <v-avatar left>
+            <span :class="'flag-icon flag-icon-' + data.item.code.toLowerCase()"></span>
+          </v-avatar>
+          {{ data.item.country }}
+        </v-chip>
+      </template>
+      <template v-slot:item="data">
+        <v-list-item-content>
+          <v-list-item-title><span :class="'flag-icon flag-icon-' + data.item.code.toLowerCase()"></span> {{ data.item.country }}</v-list-item-title>
+        </v-list-item-content>
+      </template>
+    </v-autocomplete>
 
     <v-text-field
       v-model="email"
@@ -66,21 +88,21 @@
     <v-text-field
       v-model="phone"
       :rules="phoneRules"
-      label="Phone"
+      label="Teléfono"
       required
     ></v-text-field>
 
     <v-text-field
       v-model="people"
       :rules="peopleRules"
-      label="People"
+      label="Personas de contacto"
       required
     ></v-text-field>
     
     <v-text-field
       v-model="observations"
       :rules="observationsRules"
-      label="Observations"
+      label="Observaciones"
       required
     ></v-text-field>
 
@@ -89,7 +111,7 @@
       :disabled="!valid"
       @click="send"
     >
-      Submit
+      Enviar
     </v-btn>
   </v-form>
 </v-container>
@@ -97,60 +119,58 @@
 
 <script>
 
-import axios from "axios"; 
+import { GET_CUSTOMER, EDIT_CUSTOMER } from "@/store/actions.type";
+import listCountries from "i18n-iso-countries";
+import 'flag-icon-css/css/flag-icon.css'
+listCountries.registerLocale(require("i18n-iso-countries/langs/es.json"));
+
   export default {
     name: 'Edit',
     data: () => ({
       customer: {},
-      errorResponse: {},
       valid: true,
       cif: '',
       cifRules: [
-        v => !!v || 'CIF is required',
-        v => (v && v.length <= 12) || 'CIF must be less than 12 characters',
+        v => !!v || 'El CIF es obligatorio',
+        v => (v && v.length <= 12) || 'El CIF debe tener menos de 12 caracteres',
       ],
       name: '',
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 100) || 'Name must be less than 100 characters',
+        v => !!v || 'El nombre es obligatorio',
+        v => (v && v.length <= 100) || 'El nombre debe tener menos de 100 caracteres',
       ],
       address: '',
       addressRules: [
-        v => !!v || 'Address is required',
-        v => (v && v.length <= 100) || 'Address must be less than 100 characters',
+        v => !!v || 'La dirección es obligatoria',
+        v => (v && v.length <= 100) || 'La dirección debe tener menos de 100 caracteres',
       ],
       city: '',
       cityRules: [
-        v => !!v || 'City is required',
-        v => (v && v.length <= 100) || 'City must be less than 100 characters',
+        v => !!v || 'La ciudad es obligatoria',
+        v => (v && v.length <= 100) || 'La ciudad debe tener menos de 100 caracteres',
       ],
       postalCode: '',
       postalCodeRules: [
-        v => (v && v.length <= 10) || 'Address must be less than 10 characters',
+        v => (v && v.length <= 10) || 'El código postal debe tener menos de 10 caracteres',
       ],
       country: null,
-      countries: [
-        'Spain',
-        'Germany',
-        'Italy',
-        'France',
-      ],
+      countries: Object.entries(listCountries.getNames("es", {select: "official"})).map((v) => { return { code: v[0], country: v[1]}}),
       email: '',
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        v => !!v || 'El E-mail es obligatorio',
+        v => /.+@.+\..+/.test(v) || 'El E-mail tiene que ser válido',
       ],
       phone: '',
       phoneRules: [
-        v => (v && v.length <= 10) || 'Phone must be less than 10 characters',
+        v => (v && v.length <= 10) || 'El teléfono debe tener menos de 10 caracteres',
       ],
       people: '',
       peopleRules: [
-        v => (v && v.length <= 1000) || 'People must be less than 1000 characters',
+        v => (v && v.length <= 1000) || 'Las personas de contacto deben tener menos de 1000 caracteres',
       ],
       observations: '',
       observationsRules: [
-        v => (v && v.length <= 1000) || 'Observations must be less than 1000 characters',
+        v => (v && v.length <= 1000) || 'Las observaciones deben tener menos de 1000 caracteres',
       ],
     }),
     mounted() {
@@ -158,7 +178,7 @@ import axios from "axios";
     },
     methods: {
       send() {
-        axios.put('http://localhost:8762/customers/' + this.$route.params.id, {
+        this.customer= {
             cif: this.cif,
             name: this.name,
             address: this.address,
@@ -169,18 +189,20 @@ import axios from "axios";
             phone: this.phone,
             people: this.people,
             observations: this.observations,
-        }).then(response => {
-            this.$store.commit('setMsg', { type: 'success', text: 'El cliente ha sido guardado con éxito.' });
+          }
+        this.$store
+        .dispatch(EDIT_CUSTOMER, {
+          id: this.$route.params.id,
+          customer: this.customer
+        })
+        .then(response => {
             this.$router.push('/customers/' + response.data.id)
-        }).catch(e => {
-            this.$store.commit('setMsg', { type: 'error', text: 'Ha habido un error en la operación.' });
-            this.errorResponse = e;
         });
       },
       getOne() {
-        axios
-          .get("http://localhost:8762/customers/" + this.$route.params.id)
-          .then((response) => {
+        this.$store
+        .dispatch(GET_CUSTOMER, this.$route.params.id)
+        .then((response) => {
             this.customer = response.data
             this.cif = this.customer.cif
             this.name = this.customer.name
@@ -192,11 +214,11 @@ import axios from "axios";
             this.phone = this.customer.phone
             this.people = this.customer.people
             this.observations = this.customer.observations
-          })
-          .catch((error) => {
-            console.log(error);
           });
-      }
+      },
+      remove () {
+        this.country = ''
+      },
     }
   }
 </script>

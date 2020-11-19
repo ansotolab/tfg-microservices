@@ -14,6 +14,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -98,20 +99,20 @@ public class ImageServiceTest {
         byte [] data = new byte[2 * 1024 * 1024];
         Image image = new Image("image", "gif", data);
 
-        given(imageRepository.findById(anyLong())).willReturn(Optional.of(image));
+        given(imageRepository.findById(any(UUID.class))).willReturn(Optional.of(image));
 
         assertDoesNotThrow(() -> {
-            Image imageReal = imageService.getFile(1L);
+            Image imageReal = imageService.getFile(UUID.randomUUID());
             assertThat(imageReal).isNotNull();
         });
     }
 
     @Test
     public void shouldThorwErrorWhenImageDoesNotExists() {
-        given(imageRepository.findById(anyLong())).willReturn(Optional.empty());
+        given(imageRepository.findById(any(UUID.class))).willReturn(Optional.empty());
 
         assertThrows(ImageNotFound.class, () -> {
-            imageService.getFile(1L);
+            imageService.getFile(UUID.randomUUID());
         });
     }
 }

@@ -26,6 +26,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.UUID;
+
 import static org.apache.http.client.methods.RequestBuilder.post;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -54,13 +56,15 @@ public class ImageControllerTest {
     Image image = new Image();
     MockMultipartFile file;
 
+    UUID uuid = UUID.randomUUID();
+
     MockMultipartFile fileExceeded;
     MockMultipartFile fileWrongType;
 
     @Before
     public void setUp() {
         byte [] data = new byte[2 * 1024 * 1024];
-        image.setId(1L);
+        image.setId(uuid);
         image.setName("image.jpg");
         image.setType("jpg");
         image.setData(data);
@@ -74,10 +78,10 @@ public class ImageControllerTest {
 
     @Test
     public void shouldGetImage() {
-        given(imageService.getFile(1L)).willReturn(this.image);
+        given(imageService.getFile(uuid)).willReturn(this.image);
 
         assertDoesNotThrow(() -> {
-            this.mockMvc.perform(get("/images/1").accept(MediaType.APPLICATION_JSON))
+            this.mockMvc.perform(get("/images/" + uuid.toString()).accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().bytes(image.getData()))
                     .andExpect(content().contentType(MediaType.IMAGE_JPEG_VALUE));
@@ -86,10 +90,10 @@ public class ImageControllerTest {
 
     @Test
     public void shouldThrowErrorWhenImageDoesNotExists() {
-        given(imageService.getFile(1L)).willThrow(ImageNotFound.class);
+        given(imageService.getFile(uuid)).willThrow(ImageNotFound.class);
 
         assertDoesNotThrow(() -> {
-            this.mockMvc.perform(get("/images/1").accept(MediaType.APPLICATION_JSON))
+            this.mockMvc.perform(get("/images/" + uuid.toString()).accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound());
         });
     }
@@ -103,7 +107,7 @@ public class ImageControllerTest {
         assertDoesNotThrow(() -> {
             mockMvcWeb.perform(multipart("/images").file(file))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", is(image.getId().intValue())))
+                    .andExpect(jsonPath("$.id", is(image.getId().toString())))
                     .andExpect(jsonPath("$.name", is(image.getName())))
                     .andExpect(jsonPath("$.type", is(image.getType())));
         });

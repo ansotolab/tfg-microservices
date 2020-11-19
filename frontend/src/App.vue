@@ -1,21 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="blue"
-      dense
-    >
-      <router-link 
-      :to="{ name: 'customers' }"
-          style="text-decoration: none">
-        <v-toolbar-title
-          class="white--text"
-        >
-          Clientes
-        </v-toolbar-title>
-      </router-link>
-    </v-app-bar>
-
+    <Navbar />
     <v-main>      
       <Alert />
       <router-view/>
@@ -25,16 +10,23 @@
 
 <script>
 import Alert from '@/components/Alert'
+import Navbar from '@/components/Navbar'
 
 export default {
   name: 'App',
 
   components: {
-    Alert
+    Alert,
+    Navbar
   },
 
   data: () => ({
-    //
   }),
+
+  methods: {
+  },
+
+  computed: {
+  }
 };
 </script>

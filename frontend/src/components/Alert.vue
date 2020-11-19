@@ -2,23 +2,34 @@
 <v-container>
     <v-alert
       class="text-center"
-      :type="$store.getters.msg.type"
+      :type="type"
       dismissible
       border="left"
       @input="closeAlert"
-      v-if="$store.getters.msg.text != ''"
-      >{{ $store.getters.msg.text }}</v-alert
+      v-if="msg != ''"
+      >{{ msg }}</v-alert
     >
 </v-container>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { SEND_ALERT } from "@/store/actions.type"
+
   export default {
     name: 'Alert',
+
     methods: {
       closeAlert() {
-        this.$store.commit('setMsg', { type: '', text: '' } );
+        this.$store.dispatch(SEND_ALERT, { msg: '', type: '' } );
       }
-    }
+    },
+
+    computed: {
+    ...mapState({
+      msg: state => state.alerts.msg,
+      type: state => state.alerts.type
+    })
+  }
   };
 </script>
