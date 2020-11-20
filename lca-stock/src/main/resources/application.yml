@@ -6,7 +6,7 @@ spring:
     name: stock-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/db?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3307/db?allowPublicKeyRetrieval=true&useSSL=false
     username: user
     password: password
     initialization-mode: always
@@ -18,7 +18,7 @@ spring:
       max-request-size: 25MB
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       
   properties:
     hibernate:
@@ -37,7 +37,7 @@ management:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://discovery:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
