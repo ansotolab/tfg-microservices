@@ -1,0 +1,43 @@
+server:
+  port: 8300
+
+spring:
+  application:
+    name: stock-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/db?allowPublicKeyRetrieval=true&useSSL=false
+    username: user
+    password: password
+    initialization-mode: always
+    sqlScriptEncoding: UTF-8
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 25MB
+  jpa:
+    hibernate:
+      ddl-auto: update
+      
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      
+springdoc:
+  api-docs:
+    path: /api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
