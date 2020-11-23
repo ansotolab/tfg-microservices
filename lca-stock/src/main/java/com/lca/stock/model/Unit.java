@@ -1,4 +1,5 @@
 package com.lca.stock.model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -23,6 +24,7 @@ public class Unit {
     @NotBlank(message = "Type is required.") @NonNull
     private UnitType type;
 
+    @JsonIgnoreProperties("unit")
     @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Material> materials;
 }

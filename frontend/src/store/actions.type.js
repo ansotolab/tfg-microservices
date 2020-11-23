@@ -25,3 +25,8 @@ export const FETCH_USERS = "fetchUsers";
 export const CREATE_USER = "createUser";
 export const EDIT_USER = "editUser";
 export const GET_USER = "getUser";
+
+// MATERIALS
+export const FETCH_MATERIALS = "fetchMaterials";
+export const FETCH_UNITS = "fetchUnits";
+export const CREATE_MATERIALS = "createMaterial";

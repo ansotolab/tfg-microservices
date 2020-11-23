@@ -113,6 +113,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
          .antMatchers(HttpMethod.POST, "/api/images").hasAuthority("EDIT_CUSTOMER")
 
+	// CUSTOMER MICROSERVICE
+         .antMatchers(HttpMethod.GET, "/api/materials").hasAuthority("EDIT_MATERIAL")
+         .antMatchers(HttpMethod.POST, "/api/materials").hasAuthority("EDIT_MATERIAL")
+         .antMatchers(HttpMethod.GET, "/api/units").hasAuthority("EDIT_MATERIAL")
 
          // THE REST OF REQUESTS
          .anyRequest().authenticated()
