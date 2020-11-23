@@ -29,4 +29,4 @@ export const GET_USER = "getUser";
 // MATERIALS
 export const FETCH_MATERIALS = "fetchMaterials";
 export const FETCH_UNITS = "fetchUnits";
-export const CREATE_MATERIALS = "createMaterial";
+export const CREATE_MATERIAL = "createMaterial";
