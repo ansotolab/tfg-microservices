@@ -16,12 +16,12 @@ public class MaterialController {
     private MaterialService materialService;
 
     @GetMapping("")
-    public List<Material> getCustomers() {
+    public List<Material> getMaterials() {
         return materialService.getAll();
     }
 
     @PostMapping("")
-    public Material createCustomer(@Valid @RequestBody Material material) {
+    public Material createMaterial(@Valid @RequestBody Material material) {
         return materialService.saveMaterial(material);
     }
 }
