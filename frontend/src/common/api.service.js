@@ -148,3 +148,17 @@ export const MaterialsService = {
       .catch(() => store.dispatch(SEND_ALERT, { msg: 'Ha habido un error en la operación.', type: 'error' } ) );
   },
 };
+
+export const ProductsService = {
+  get(slug) {
+    return ApiService.get("api/products", slug);
+  },
+  create(params) {
+    return ApiService.post("api/products", params)
+      .then((data) => {
+        store.dispatch(SEND_ALERT, { msg: 'Se ha creado correctamente el producto.', type: 'success' } );
+        return data;
+      })
+      .catch(() => store.dispatch(SEND_ALERT, { msg: 'Ha habido un error en la operación.', type: 'error' } ) );
+  },
+};

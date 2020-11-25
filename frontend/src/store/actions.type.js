@@ -30,3 +30,7 @@ export const GET_USER = "getUser";
 export const FETCH_MATERIALS = "fetchMaterials";
 export const FETCH_UNITS = "fetchUnits";
 export const CREATE_MATERIAL = "createMaterial";
+
+// PRODUCTS
+export const FETCH_PRODUCTS = "fetchProducts";
+export const CREATE_PRODUCT = "createProduct";
