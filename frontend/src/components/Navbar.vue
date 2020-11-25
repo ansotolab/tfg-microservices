@@ -52,6 +52,7 @@ import { LOGOUT } from '@/store/actions.type'
     data: () => ({
       menu: [
             { title: 'Clientes', path: '/customers', icon: 'home', role: 'VIEW_CUSTOMER' },
+            { title: 'Materiales', path: '/materials', icon: 'face', role: 'EDIT_MATERIAL' },
             { title: 'Usuarios', path: '/users', icon: 'face', role: 'EDIT_USER' },
       ]
     }),

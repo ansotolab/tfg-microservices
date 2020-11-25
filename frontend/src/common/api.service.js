@@ -131,3 +131,20 @@ export const UsersService = {
       .catch(() => store.dispatch(SEND_ALERT, { msg: 'Ha habido un error en la operación.', type: 'error' } ) );
   }
 };
+
+export const MaterialsService = {
+  get(slug) {
+    return ApiService.get("api/materials", slug);
+  },
+  getUnits() {
+    return ApiService.get("api/units");
+  },
+  create(params) {
+    return ApiService.post("api/materials", params)
+      .then((data) => {
+        store.dispatch(SEND_ALERT, { msg: 'Se ha creado correctamente el material.', type: 'success' } );
+        return data;
+      })
+      .catch(() => store.dispatch(SEND_ALERT, { msg: 'Ha habido un error en la operación.', type: 'error' } ) );
+  },
+};

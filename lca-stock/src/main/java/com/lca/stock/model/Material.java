@@ -1,5 +1,6 @@
 package com.lca.stock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -21,6 +22,7 @@ public class Material {
     @NotBlank(message = "Name is required.") @NonNull
     private String name;
 
+    @JsonIgnoreProperties("materials")
     @ManyToOne
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
     private Unit unit;

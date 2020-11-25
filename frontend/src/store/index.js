@@ -7,6 +7,7 @@ import details from "./details.module"
 import images from "./images.module"
 import alerts from "./alerts.module"
 import users from "./users.module"
+import materials from "./materials.module"
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     details,
     images,
     alerts,
-    users
+    users,
+    materials
   }
 })
   

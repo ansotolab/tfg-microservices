@@ -14,6 +14,8 @@ import ForbiddenPage from "@/pages/Error/403.vue";
 import ListUsersPage from "@/pages/User/ListUsersPage.vue";
 import RegisterUserPage from "@/pages/User/RegisterUserPage.vue";
 import EditUserPage from "@/pages/User/EditUserPage.vue";
+import ListMaterialPage from "@/pages/Material/ListMaterialPage.vue";
+import FormMaterialPage from "@/pages/Material/FormMaterialPage.vue";
 
 import { CHECK_AUTH } from "@/store/actions.type"
 
@@ -107,7 +109,23 @@ const routes = [
     meta: {
       authorities: 'EDIT_USER'
     }
-  }
+  },
+  {
+    path: "/materials",
+    name: "materials",
+    component: ListMaterialPage,
+    meta: {
+      authorities: 'EDIT_MATERIAL'
+    }
+  },
+  {
+    path: "/materials/new",
+    name: "materials-new",
+    component: FormMaterialPage,
+    meta: {
+      authorities: 'EDIT_MATERIAL'
+    }
+  },
 ];
 
 const router = new VueRouter({

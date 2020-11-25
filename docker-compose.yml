@@ -83,6 +83,45 @@ services:
       - '33061'
     volumes:
       - ${CUSTOMER_MYSQL_VOLUME}:/var/lib/mysql
+      
+  stock:
+    container_name: service-stock-api
+    build:
+      context: ./lca-stock
+      dockerfile: Dockerfile
+    environment: 
+      SPRING_DATASOURCE_URL: ${STOCK_SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${STOCK_MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${STOCK_MYSQL_PASSWORD}
+      SPRING_DATASOURCE_INITIALIZATION-MODE: ${STOCK_SPRING_DATASOURCE_INITIALIZATION}
+      SPRING_JPA_HIBERNATE_DDL-AUTO: ${STOCK_SPRING_JPA_HIBERNATE_DLL}
+      #EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://discovery:8761/eureka/
+    ports:
+      - "8300:8300"
+    depends_on:
+      - discovery
+      - gateway
+      - stock-db
+    links:
+      - discovery:discovery
+      - stock-db
+    command: ["../wait.sh", "stock-db:3306"]
+
+  stock-db:
+    container_name: service-stock-db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${STOCK_MYSQL_DATABASE}
+      MYSQL_USER: ${STOCK_MYSQL_USER}
+      MYSQL_PASSWORD: ${STOCK_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${STOCK_MYSQL_ROOT_PASSWORD}
+    ports:
+      - '33062:3306'
+    expose:
+      - '33062'
+    volumes:
+      - ${STOCK_MYSQL_VOLUME}:/var/lib/mysql
 
   frontend:
     container_name: service-frontend
