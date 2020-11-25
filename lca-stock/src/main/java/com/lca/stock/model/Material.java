@@ -33,6 +33,7 @@ public class Material {
     @OneToMany(mappedBy = "material", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Trace> traces;
 
+    @JsonIgnoreProperties("material")
     @OneToMany(mappedBy = "material", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductMaterial> products;
 }

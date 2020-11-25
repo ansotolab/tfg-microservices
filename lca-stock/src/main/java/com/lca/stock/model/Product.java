@@ -1,5 +1,7 @@
 package com.lca.stock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -19,9 +21,10 @@ public class Product {
     private Long id;
     @NotBlank(message = "Name is required.") @NonNull
     private String name;
-    @NotBlank(message = "isPack is required.") @NonNull
+
     private Boolean isPack;
 
+    @JsonIgnoreProperties("product")
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductMaterial> materials;
 
@@ -32,11 +35,13 @@ public class Product {
     @OneToMany(mappedBy = "variantParent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> variants;
 
+    @JsonIgnoreProperties("parent")
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProductPack> parentsPacks;
+    private List<ProductPack> childProducts;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProductPack> pack;
+    private List<ProductPack> parentProducts;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Output> outputs;
