@@ -18,7 +18,7 @@ public class Shipment {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
     private Long id;
-    @NotBlank(message = "Date is required.") @NonNull
+    @NonNull
     private Date date;
 
     @OneToMany(mappedBy = "shipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

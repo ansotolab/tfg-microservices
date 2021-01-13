@@ -17,17 +17,17 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
     private Long id;
-    @NotBlank(message = "CIF is required.") @NonNull
+    @NonNull
     private String cif;
-    @NotBlank(message = "Name is required.") @NonNull
+    @NonNull
     private String name;
-    @NotBlank(message = "Address is required.") @NonNull
+    @NonNull
     private String address;
-    @NotBlank(message = "City is required.") @NonNull
+    @NonNull
     private String city;
     @NonNull
     private String postalCode;
-    @NotBlank(message = "Country is required.") @NonNull
+    @NonNull
     private String country;
     @NonNull
     private String email;
@@ -38,4 +38,7 @@ public class Supplier {
     @Lob
     @NonNull
     private String observations;
+
+    @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Pickup> pickupList;
 }

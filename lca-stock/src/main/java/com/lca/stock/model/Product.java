@@ -19,18 +19,9 @@ public class Product {
     private Long id;
     @NotBlank(message = "Name is required.") @NonNull
     private String name;
-    @NotBlank(message = "isPack is required.") @NonNull
-    private Boolean isPack;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductMaterial> materials;
-
-    @ManyToOne
-    @JoinColumn(name = "variant_parent_id", referencedColumnName = "id")
-    private Product variantParent;
-
-    @OneToMany(mappedBy = "variantParent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Product> variants;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Output> outputs;

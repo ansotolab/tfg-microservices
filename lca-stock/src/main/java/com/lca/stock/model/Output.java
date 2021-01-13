@@ -17,7 +17,7 @@ public class Output {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
     private Long id;
-    @NotBlank(message = "Quantity is required.") @NonNull
+    @NonNull
     private Float quantity;
 
     @ManyToOne
