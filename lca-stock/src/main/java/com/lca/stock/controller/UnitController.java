@@ -11,13 +11,4 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/units")
-public class UnitController {
-
-    @Autowired
-    public UnitService unitService;
-
-    @GetMapping("")
-    public List<Unit> getAll() {
-        return unitService.getAll();
-    }
-}
+public class UnitController {}

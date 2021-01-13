@@ -31,8 +31,5 @@ public class Material {
     private List<Input> inputs;
 
     @OneToMany(mappedBy = "material", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Trace> traces;
-
-    @OneToMany(mappedBy = "material", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductMaterial> products;
 }

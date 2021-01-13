@@ -25,10 +25,6 @@ public class Input {
     private Pickup pickup;
 
     @ManyToOne
-    @JoinColumn(name = "input_lot_id", referencedColumnName = "id")
-    private InputLot inputLot;
-
-    @ManyToOne
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Material material;
 }

@@ -32,12 +32,6 @@ public class Product {
     @OneToMany(mappedBy = "variantParent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> variants;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProductPack> parentsPacks;
-
-    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProductPack> pack;
-
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Output> outputs;
 }

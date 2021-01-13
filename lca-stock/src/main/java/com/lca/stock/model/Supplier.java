@@ -38,7 +38,4 @@ public class Supplier {
     @Lob
     @NonNull
     private String observations;
-
-    @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<InputLot> inputLots;
 }

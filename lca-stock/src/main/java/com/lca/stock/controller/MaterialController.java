@@ -10,18 +10,4 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/materials")
-public class MaterialController {
-
-    @Autowired
-    private MaterialService materialService;
-
-    @GetMapping("")
-    public List<Material> getMaterials() {
-        return materialService.getAll();
-    }
-
-    @PostMapping("")
-    public Material createMaterial(@Valid @RequestBody Material material) {
-        return materialService.saveMaterial(material);
-    }
-}
+public class MaterialController {}

@@ -27,11 +27,4 @@ public class Output {
     @ManyToOne
     @JoinColumn(name = "shipment_id", referencedColumnName = "id")
     private Shipment shipment;
-
-    @ManyToOne
-    @JoinColumn(name = "output_lot_id", referencedColumnName = "id")
-    private OutputLot outputLot;
-
-    @OneToMany(mappedBy = "output", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Trace> traces;
 }
