@@ -1,5 +1,7 @@
 package com.lca.stock.service;
 
+import com.lca.stock.dto.MaterialDTO;
+import com.lca.stock.dto.mapper.StockMapper;
 import com.lca.stock.model.Material;
 import com.lca.stock.repository.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,17 @@ public class MaterialService {
     @Autowired
     private MaterialRepository materialRepository;
 
-    public Material saveMaterial(Material material) {
-        return materialRepository.save(material);
+    @Autowired
+    private StockMapper stockMapper;
+
+    public MaterialDTO saveMaterial(MaterialDTO materialDTO) {
+        Material material = stockMapper.dtoToMaterial(materialDTO);
+        return stockMapper.materialToDTO(materialRepository.save(material));
     }
 
-    public List<Material> getAll() {
-        List<Material> customers = new ArrayList<>();
-        materialRepository.findAll().iterator().forEachRemaining(customers::add);
-        return customers;
+    public List<MaterialDTO> getAll() {
+        List<Material> materials = new ArrayList<>();
+        materialRepository.findAll().iterator().forEachRemaining(materials::add);
+        return stockMapper.materialToDTO(materials);
     }
 }
