@@ -1,4 +1,5 @@
 package com.lca.stock.model;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -13,7 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Unit {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
 
     @NonNull

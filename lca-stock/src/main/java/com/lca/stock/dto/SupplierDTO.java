@@ -31,5 +31,5 @@ public class SupplierDTO {
     @Lob
     private String observations;
 
-    private List<PickupDTO>  pickups;
+    private List<PickupDTO> pickups;
 }

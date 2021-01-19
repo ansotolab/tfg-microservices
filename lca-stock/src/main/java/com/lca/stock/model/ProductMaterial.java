@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -14,7 +13,8 @@ import javax.validation.constraints.NotBlank;
 @RequiredArgsConstructor
 public class ProductMaterial {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
     @NonNull
     private Float quantity;

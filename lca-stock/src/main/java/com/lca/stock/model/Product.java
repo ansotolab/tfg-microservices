@@ -15,9 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
-    @NotBlank(message = "Name is required.") @NonNull
+    @NotBlank(message = "Name is required.")
+    @NonNull
     private String name;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -4,11 +4,10 @@ import com.lca.stock.dto.*;
 import com.lca.stock.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 import java.util.List;
 
-@Mapper(componentModel="spring")
+@Mapper(componentModel = "spring")
 public interface StockMapper {
 
     // UNIT TYPE

@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Supplier {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
     @NonNull
     private String cif;
@@ -33,7 +33,8 @@ public class Supplier {
     private String email;
     @NonNull
     private String phone;
-    @Lob @NonNull
+    @Lob
+    @NonNull
     private String people;
     @Lob
     @NonNull

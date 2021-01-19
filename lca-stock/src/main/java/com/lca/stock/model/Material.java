@@ -15,7 +15,8 @@ import java.util.List;
 public class Material {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY) @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Long id;
     @NonNull
     private String name;

@@ -1,6 +1,7 @@
 package com.lca.stock.dto;
 
 import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 
 @Data
