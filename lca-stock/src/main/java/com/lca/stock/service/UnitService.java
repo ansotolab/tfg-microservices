@@ -2,6 +2,7 @@ package com.lca.stock.service;
 
 import com.lca.stock.dto.UnitDTO;
 import com.lca.stock.dto.mapper.StockMapper;
+import com.lca.stock.exception.UnitNotFound;
 import com.lca.stock.model.Unit;
 import com.lca.stock.repository.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,13 @@ public class UnitService {
         List<Unit> units = new ArrayList<>();
         unitRepository.findAll().iterator().forEachRemaining(units::add);
         return stockMapper.unitToDTO(units);
+    }
+
+    public UnitDTO getOne(Long id) {
+        return stockMapper.unitToDTO(
+                unitRepository
+                        .findById(id)
+                        .orElseThrow(() -> new UnitNotFound(id))
+        );
     }
 }

@@ -16,7 +16,6 @@ import java.util.List;
 public class Pickup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Long id;
     @NonNull
     private Date date;

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({MaterialNotFound.class})
+    @ExceptionHandler({MaterialNotFound.class, UnitNotFound.class})
     public ResponseEntity<Object> handleNotFoundEntity(RuntimeException ex, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());

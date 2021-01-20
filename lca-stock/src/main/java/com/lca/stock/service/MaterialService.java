@@ -17,9 +17,14 @@ public class MaterialService {
     private MaterialRepository materialRepository;
 
     @Autowired
+    private UnitService unitService;
+
+    @Autowired
     private StockMapper stockMapper;
 
     public MaterialDTO saveMaterial(MaterialDTO materialDTO) {
+        // If unit id doesn't exist throws 404 exception.
+        materialDTO.setUnit(unitService.getOne(materialDTO.getUnit().getId()));
         Material material = stockMapper.dtoToMaterial(materialDTO);
         return stockMapper.materialToDTO(materialRepository.save(material));
     }

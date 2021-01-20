@@ -1,0 +1,29 @@
+server:
+  port: 8300
+
+spring:
+  application:
+    name: stock-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_test?allowPublicKeyRetrieval=true&useSSL=false
+    username: user
+    password: password
+    initialization-mode: always
+    sqlScriptEncoding: UTF-8
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 25MB
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+
+eureka:
+  client:
+    enabled: false

@@ -14,7 +14,6 @@ import javax.persistence.*;
 public class ProductMaterial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Long id;
     @NonNull
     private Float quantity;
